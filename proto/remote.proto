@@ -1,0 +1,4 @@
+syntax = "proto3";
+package remote;
+option go_package = "/github.com/actor-model/remote";
+// import "actor.proto";
