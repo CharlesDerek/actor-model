@@ -1,6 +1,11 @@
 package actor
 
-import "github.com/charlesderek/actor-model/log"
+import (
+	"fmt"
+	"runtime/debug"
+
+	"github.com/charlesderek/actor-model/log"
+)
 
 type process struct {
 	ProducerConfig
@@ -42,6 +47,7 @@ func (p *process) start() *PID {
 					"pid":         p.pid,
 					"reason":      err,
 				})
+				fmt.Println(string(debug.Stack()))
 				p.start()
 			}
 		}()
