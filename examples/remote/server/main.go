@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/charlesderek/actor-model/actor"
+	"github.com/charlesderek/actor-model/examples/remote/msg"
 	"github.com/charlesderek/actor-model/remote"
 )
 
@@ -14,11 +15,13 @@ func newServer() actor.Receiver {
 }
 
 func (f *server) Receive(ctx *actor.Context) {
-	switch msg := ctx.Message().(type) {
+	switch m := ctx.Message().(type) {
 	case actor.Started:
 		fmt.Println("server has started")
 	case *actor.PID:
-		fmt.Println("server has received:", msg)
+		fmt.Println("server has received:", m)
+	case *msg.Message:
+		fmt.Println("got message", m)
 	}
 }
 

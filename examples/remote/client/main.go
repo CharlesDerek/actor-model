@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/charlesderek/actor-model/actor"
+	"github.com/charlesderek/actor-model/examples/remote/msg"
 	"github.com/charlesderek/actor-model/remote"
 )
 
@@ -14,7 +15,7 @@ func main() {
 
 	pid := actor.NewPID("127.0.0.1:4000", "server")
 	for {
-		e.Send(pid, pid)
-		time.Sleep(time.Millisecond * 100)
+		e.Send(pid, &msg.Message{Data: "hello!"})
+		time.Sleep(time.Second)
 	}
 }
