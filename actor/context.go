@@ -1,6 +1,8 @@
 package actor
 
 import (
+	"strings"
+
 	"github.com/charlesderek/actor-model/log"
 	"github.com/charlesderek/actor-model/safemap"
 )
@@ -89,6 +91,15 @@ func (c *Context) Send(pid *PID, msg any) {
 // This will also set the "forwarder" as the sender of the message.
 func (c *Context) Forward(pid *PID) {
 	c.engine.SendWithSender(pid, c.message, c.pid)
+}
+
+func (c *Context) GetLocalPID(name string, tags ...string) *PID {
+	name = name + PIDSeparator + strings.Join(tags, PIDSeparator)
+	proc := c.engine.registry.getByName(name)
+	if proc != nil {
+		return proc.PID()
+	}
+	return nil
 }
 
 func (c *Context) PID() *PID {
