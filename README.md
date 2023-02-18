@@ -1,4 +1,5 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/charlesderek/actor-model)](https://goreportcard.com/report/github.com/charlesderek/actor-model)
+![example workflow](https://github.com/charlesderek/actor-model/actions/workflows/build.yml/badge.svg?branch=master)
 
 # Hollywood
 
