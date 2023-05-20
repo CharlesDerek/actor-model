@@ -10,13 +10,13 @@ const LocalLookupAddr = "local"
 
 type Registry struct {
 	mu     sync.RWMutex
-	lookup map[string]Processer
+	lookup map[string]Processor
 	engine *Engine
 }
 
 func newRegistry(e *Engine) *Registry {
 	return &Registry{
-		lookup: make(map[string]Processer, 1024),
+		lookup: make(map[string]Processor, 1024),
 		engine: e,
 	}
 }
@@ -27,7 +27,7 @@ func (r *Registry) Remove(pid *PID) {
 	delete(r.lookup, pid.ID)
 }
 
-func (r *Registry) get(pid *PID) Processer {
+func (r *Registry) get(pid *PID) Processor {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 	if proc, ok := r.lookup[pid.ID]; ok {
@@ -36,7 +36,7 @@ func (r *Registry) get(pid *PID) Processer {
 	return r.engine.deadLetter
 }
 
-func (r *Registry) getByID(id string) Processer {
+func (r *Registry) getByID(id string) Processor {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
 	return r.lookup[id]
@@ -45,7 +45,7 @@ func (r *Registry) getByID(id string) Processer {
 // TODO: When a process is already registered, we "should" create
 // a random tag for it? Or are we going to prevent that, and let the user
 // decide?
-func (r *Registry) add(proc Processer) {
+func (r *Registry) add(proc Processor) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	id := proc.PID().ID

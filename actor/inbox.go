@@ -11,13 +11,13 @@ var LOCK_OS_THREAD = true
 
 type Inboxer interface {
 	Send(Envelope)
-	Start(Processer)
+	Start(Processor)
 	Stop() error
 }
 
 type Inbox struct {
 	ggq  *ggq.GGQ[Envelope]
-	proc Processer
+	proc Processor
 }
 
 func NewInbox(size int) *Inbox {
@@ -30,7 +30,7 @@ func (in *Inbox) Consume(msgs []Envelope) {
 	in.proc.Invoke(msgs)
 }
 
-func (in *Inbox) Start(proc Processer) {
+func (in *Inbox) Start(proc Processor) {
 	in.proc = proc
 	var lockOSThread bool
 	// prevent race condition here be reassigning before go routine.

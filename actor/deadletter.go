@@ -7,7 +7,7 @@ import (
 	"github.com/charlesderek/actor-model/log"
 )
 
-// TODO: The deadLetter is implemented as a plain Processer, but
+// TODO: The deadLetter is implemented as a plain Processor, but
 // can actually be implemented as a Receiver. This is a good first issue.
 
 type deadLetter struct {

@@ -37,7 +37,7 @@ type Engine struct {
 
 	address    string
 	remote     Remoter
-	deadLetter Processer
+	deadLetter Processor
 }
 
 // NewEngine returns a new actor Engine.
@@ -85,9 +85,9 @@ func (e *Engine) SpawnFunc(f func(*Context), id string, opts ...OptFunc) *PID {
 	return e.Spawn(newFuncReceiver(f), id, opts...)
 }
 
-// SpawnProc spawns the give Processer. This function is usefull when working
+// SpawnProc spawns the give Processor. This function is usefull when working
 // with custom created Processes. Take a look at the streamWriter as an example.
-func (e *Engine) SpawnProc(p Processer) *PID {
+func (e *Engine) SpawnProc(p Processor) *PID {
 	e.Registry.add(p)
 	p.Start()
 	return p.PID()
